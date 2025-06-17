@@ -3,9 +3,9 @@ import java.sql.*;
 import java.util.*;
 
 public class CrudOperationsUsingFiles {
-    static final String DB_URL = "jdbc:mysql://localhost:3306/your_database_name";
-    static final String USER = "your_username"; 
-    static final String PASS = "your_password"; 
+    static final String DB_URL = "jdbc:mysql://localhost:3306/your_database_name"; //edit and add your database name here
+    static final String USER = "your_username"; //edit and add your own username here
+    static final String PASS = "your_password"; // edit and add your own password here
 
     static Scanner sc = new Scanner(System.in);
 
