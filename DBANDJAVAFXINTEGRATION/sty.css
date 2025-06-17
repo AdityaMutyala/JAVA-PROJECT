@@ -1,0 +1,170 @@
+/* Root background */
+.root {
+    -fx-background-color: #0D1B2A;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+/* Menu bar styling */
+.menu-bar {
+    -fx-background-color: #1B263B;
+    -fx-text-fill: #E0E1DD;
+}
+
+.menu, .menu-item {
+    -fx-background-color: #1B263B;
+    -fx-text-fill: #E0E1DD;
+}
+
+.menu:hover, .menu-item:hover {
+    -fx-background-color: #415A77;
+}
+
+/* Left and right pane */
+.vbox, .hbox {
+    -fx-background-color: #1B263B;
+}
+
+/* Buttons */
+.button {
+    -fx-background-color: #415A77;
+    -fx-text-fill: #E0E1DD;
+    -fx-border-color: transparent;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 6 12;
+}
+
+.button:hover {
+    -fx-background-color: #778DA9;
+}
+
+/* Text fields */
+.text-field {
+    -fx-background-color: #0D1B2A;
+    -fx-text-fill: #E0E1DD;
+    -fx-border-color: #778DA9;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+/* Table view */
+.table-view {
+    -fx-background-color: #1B263B;
+    -fx-table-cell-border-color: #415A77;
+    -fx-control-inner-background: #1B263B;
+    -fx-text-background-color: #E0E1DD;
+}
+
+/* Table column headers */
+.table-view .column-header-background {
+    -fx-background-color: #415A77;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: #415A77;
+    -fx-text-fill: #E0E1DD;
+    -fx-border-color: #0D1B2A;
+}
+
+/* Table row hover effect */
+.table-row-cell:hover {
+    -fx-background-color: #778DA9;
+}
+
+/* Message box (VBox container) */
+#messageBox {
+    -fx-background-color: #1B263B;
+    -fx-border-color: #778DA9;
+    -fx-border-radius: 4;
+    -fx-padding: 8;
+}
+
+/* ScrollPane track and thumb */
+.scroll-pane {
+    -fx-background: #0D1B2A;
+}
+
+.scroll-bar:vertical, .scroll-bar:horizontal {
+    -fx-background-color: #1B263B;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: #415A77;
+}
+#dynamicContentBox {
+    -fx-background-color: #1B263B;
+    -fx-padding: 10;
+    -fx-border-color: #778DA9;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-spacing: 10;
+}
+.label {
+    -fx-text-fill: #E0E1DD;
+}
+
+.combo-box, .combo-box-base {
+    -fx-background-color: #0d1b2a;
+    -fx-text-fill: #E0E1DD;
+    -fx-border-color: #778DA9;
+}
+.combo-box .list-cell:filled:selected {
+    -fx-text-fill: white;
+    -fx-background-color: #0d1b2a; /* optional darker hover color */
+}
+#leftPane {
+    -fx-background-color: #0D1B2A;
+    -fx-border-color: #415A77;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+#leftPane {
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+}
+
+#rightPane {
+    -fx-background-color: #1B263B;
+    -fx-padding: 15;
+}
+
+#root {
+    -fx-background-color: #0D1B2A;
+}
+/* Menu bar items and popups */
+.context-menu, .menu, .menu-item {
+    -fx-background-color: #1B263B;
+    -fx-text-fill: #E0E1DD;
+}
+.menu-item:hover {
+    -fx-background-color: #415A77;
+    -fx-text-fill: white;
+}
+.context-menu {
+    -fx-background-radius: 6;
+    -fx-effect: dropshadow(three-pass-box, #000000AA, 6, 0, 0, 2);
+}
+
+/* Split pane divider (between left and right pane) */
+.split-pane-divider {
+    -fx-background-color: #1B263B;
+    -fx-padding: 0.3;
+}
+
+/* Remove default borders */
+#leftPane, #rightPane {
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+}
+
+/* Root background reinforcement */
+#root {
+    -fx-background-color: #0D1B2A;
+}
+.text-field, .button, .text-area, .menu, .menu-item, .table-view, .split-pane, .context-menu {
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
