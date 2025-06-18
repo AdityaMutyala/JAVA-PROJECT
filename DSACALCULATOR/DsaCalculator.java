@@ -1,9 +1,7 @@
 import java.util.*;
-
 public class DsaCalculator {
     static Scanner sc = new Scanner(System.in);
     static String exp;
-
     public static void main(String[] args) throws Exception {
         while (true) {
             System.out.println("Welcome to DSACALCULATOR");
@@ -16,12 +14,10 @@ public class DsaCalculator {
                 System.out.println("Expression contains invalid characters. Auto removing them....");
                 exp = exp.replaceAll("[^0-9+\\-*/().]", "");
             }
-
             exp = fixConsecutiveOperators(exp);
             validate(exp);
         }
     }
-
     public static void validate(String exp) {
         if (exp.isEmpty()) {
             System.out.print("Expression cannot be empty. Please re-enter: ");
@@ -31,15 +27,12 @@ public class DsaCalculator {
             validateStart(exp);
         }
     }
-
     public static void validateStart(String exp) {
         StringBuilder sb = new StringBuilder(exp);
-
         while (sb.length() > 0 && !(sb.charAt(0) == '(' || sb.charAt(0) == '-' || Character.isDigit(sb.charAt(0)))) {
             System.out.println("Expression starts with invalid character, auto removing it....");
             sb.deleteCharAt(0);
         }
-
         if (sb.length() == 0) {
             System.out.print("All characters removed. Please re-enter: ");
             validate(sc.nextLine().replaceAll("[^0-9+\\-*/().]", ""));
@@ -47,7 +40,6 @@ public class DsaCalculator {
             validateEnd(sb.toString());
         }
     }
-
     public static void validateEnd(String exp) {
         StringBuilder sb = new StringBuilder(exp);
         while (true) {
@@ -62,35 +54,31 @@ public class DsaCalculator {
         }
         fixExpression(sb);
     }
-
     public static void fixExpression(StringBuilder sb) {
         fixExtraClosedParentheses(sb);
         fixOpenParenthesis(sb);
         System.out.println("\nFully corrected expression: " + sb);
-
         try {
             List<Double> even = new ArrayList<>();
             List<Double> odd = new ArrayList<>();
+
+            // Tokenize the infix expression once
             List<Object> tokens = tokenizeInfix(sb.toString(), even, odd);
 
-            List<String> postfix = infixToPostfix(sb.toString()); // for evaluation only
+            // Convert to postfix for evaluation only
+            List<String> postfix = infixToPostfix(sb.toString());
+            
+            // Prepare evalTokens from postfix tokens
             List<Object> evalTokens = new ArrayList<>();
             for (String token : postfix) {
-                if (token.matches("\\d+(\\.\\d+)?")) evalTokens.add(Double.parseDouble(token));
-                else evalTokens.add(token);
-            }
-
-
-            for (String token : postfix) {
                 if (token.matches("\\d+(\\.\\d+)?")) {
-                    double val = Double.parseDouble(token);
-                    tokens.add(val);
-                    if ((int) val % 2 == 0) even.add(val);
-                    else odd.add(val);
+                    evalTokens.add(Double.parseDouble(token));
                 } else {
-                    tokens.add(token);
+                    evalTokens.add(token);
                 }
             }
+
+            // No appending postfix tokens to 'tokens' to avoid duplicates!
 
             while (true) {
                 System.out.println("\nChoose Representation:");
@@ -100,7 +88,6 @@ public class DsaCalculator {
                 System.out.println("4. Enter new expression");
                 System.out.println("5. Exit");
                 String choice = sc.nextLine();
-
                 switch (choice) {
                     case "1":
                         handleArrayListMode(tokens, even, odd);
@@ -124,19 +111,16 @@ public class DsaCalculator {
                         System.out.println("Invalid choice. Try again.");
                 }
             }
-
         } catch (Exception e) {
             System.out.println("Evaluation failed: " + e.getMessage());
         }
     }
-
     public static void fixExtraClosedParentheses(StringBuilder sb) {
         int balance = 0;
         for (int i = 0; i < sb.length(); i++) {
             char ch = sb.charAt(i);
             if (ch == '(') balance++;
             else if (ch == ')') balance--;
-
             if (balance < 0) {
                 System.out.println("\nUnmatched ')' at index " + i);
                 int contextStart = Math.max(0, i - 10);
@@ -156,7 +140,6 @@ public class DsaCalculator {
             }
         }
     }
-
     public static void fixOpenParenthesis(StringBuilder sb) {
         int openIndex = sb.indexOf("(", 0);
         while (openIndex != -1) {
@@ -178,7 +161,6 @@ public class DsaCalculator {
             openIndex = sb.indexOf("(", openIndex + 1);
         }
     }
-
     public static void fixSubExpression(StringBuilder expr) {
         int balance = 0;
         int i = 0;
@@ -197,7 +179,6 @@ public class DsaCalculator {
             System.out.println("Updated: " + expr);
         }
     }
-
     public static double evaluate(List<Object> tokens) throws Exception {
         Stack<Double> stack = new Stack<>();
         for (Object token : tokens) {
@@ -222,15 +203,12 @@ public class DsaCalculator {
         }
         return stack.pop();
     }
-
     private static List<String> infixToPostfix(String expr) throws Exception {
         Stack<Character> ops = new Stack<>();
         List<String> output = new ArrayList<>();
         StringBuilder num = new StringBuilder();
-
         for (int i = 0; i < expr.length(); i++) {
             char c = expr.charAt(i);
-
             if (Character.isDigit(c) || c == '.') {
                 num.append(c);
             } else {
@@ -238,7 +216,6 @@ public class DsaCalculator {
                     output.add(num.toString());
                     num.setLength(0);
                 }
-
                 if (c == '(') {
                     ops.push(c);
                 } else if (c == ')') {
@@ -256,11 +233,9 @@ public class DsaCalculator {
                 }
             }
         }
-
         if (num.length() > 0) {
             output.add(num.toString());
         }
-
         while (!ops.isEmpty()) {
             char top = ops.pop();
             if (top == '(' || top == ')') throw new Exception("Mismatched parentheses");
@@ -269,11 +244,9 @@ public class DsaCalculator {
 
         return output;
     }
-
     private static boolean isOperator(char c) {
         return "+-*/%^".indexOf(c) != -1;
     }
-
     private static int precedence(char op) {
         return switch (op) {
             case '+', '-' -> 1;
@@ -282,10 +255,6 @@ public class DsaCalculator {
             default -> 0;
         };
     }
-
-
-   
-
     public static String fixConsecutiveOperators(String expr) {
         StringBuilder fixed = new StringBuilder();
         int i = 0;
@@ -302,9 +271,7 @@ public class DsaCalculator {
         }
         return fixed.toString();
     }
-
     // ---------------- Implementation Handlers ---------------- //
-
     private static void handleArrayListMode(List<Object> tokens, List<Double> even, List<Double> odd) throws Exception {
         ArrayList<Object> list = new ArrayList<>(tokens);
         System.out.println("Representation: " + list);  // infix list view
@@ -313,7 +280,6 @@ public class DsaCalculator {
         System.out.println("Even Numbers: " + even);
         System.out.println("Odd Numbers: " + odd);
     }
-
     private static void handleLinkedListMode(List<Object> tokens, List<Double> even, List<Double> odd) throws Exception {
         LinkedList<Object> list = new LinkedList<>(tokens);
         printAsLinks(list, "Representation");  // use link-style print
@@ -322,27 +288,24 @@ public class DsaCalculator {
         printAsLinks(new ArrayList<>(even), "Even Numbers");
         printAsLinks(new ArrayList<>(odd), "Odd Numbers");
     }
-
-
     private static void handleQueueMode(List<Object> tokens, List<Double> even, List<Double> odd, int inCap, int eoCap) throws Exception {
         Queue<Object> queue = new LinkedList<>(tokens);
         LinkedList<Queue<Double>> inputQ = new LinkedList<>();
         LinkedList<Queue<Double>> evenQ = new LinkedList<>();
         LinkedList<Queue<Double>> oddQ = new LinkedList<>();
-
         for (Object t : tokens)
             if (t instanceof Double) addToQueueList(inputQ, (Double) t, inCap);
         even.forEach(n -> addToQueueList(evenQ, n, eoCap));
         odd.forEach(n -> addToQueueList(oddQ, n, eoCap));
-
-        System.out.println("Representation: " + queue);
+        
         double result = evaluate(convertToPostfix(new ArrayList<>(queue)));
+        System.out.println("Representation: " + queue);
         System.out.println("Result: " + result);
+
         System.out.println("Input Queues:"); printQueueList(inputQ);
         System.out.println("Even Queues:");  printQueueList(evenQ);
         System.out.println("Odd Queues:");   printQueueList(oddQ);
     }
-
     private static void addToQueueList(LinkedList<Queue<Double>> queues, Double val, int capacity) {
         for (Queue<Double> q : queues) {
             if (q.size() < capacity) {
@@ -354,14 +317,12 @@ public class DsaCalculator {
         newQ.offer(val);
         queues.add(newQ);
     }
-
     private static void printQueueList(LinkedList<Queue<Double>> queues) {
         int count = 1;
         for (Queue<Double> q : queues) {
             System.out.println("Queue " + count++ + ": " + q);
         }
     }
-
     private static void printAsLinks(List<?> list, String title) {
         System.out.print(title + ": ");
         for (Object o : list) {
@@ -369,14 +330,11 @@ public class DsaCalculator {
         }
         System.out.println("null");
     }
-    
     public static List<Object> tokenizeInfix(String expr, List<Double> even, List<Double> odd) {
         List<Object> tokens = new ArrayList<>();
         StringBuilder num = new StringBuilder();
-
         for (int i = 0; i < expr.length(); i++) {
             char c = expr.charAt(i);
-
             if (Character.isDigit(c) || c == '.') {
                 num.append(c);
             } else {
@@ -390,21 +348,18 @@ public class DsaCalculator {
                 tokens.add(String.valueOf(c));
             }
         }
-
         if (num.length() > 0) {
             double val = Double.parseDouble(num.toString());
             tokens.add(val);
             if ((int) val % 2 == 0) even.add(val);
             else odd.add(val);
         }
-
         return tokens;
     }
     private static List<Object> convertToPostfix(List<Object> infix) throws Exception {
         List<Object> postfix = new ArrayList<>();
         Stack<String> stack = new Stack<>();
         Map<String, Integer> precedence = Map.of("+", 1, "-", 1, "*", 2, "/", 2);
-
         for (Object token : infix) {
             if (token instanceof Double) {
                 postfix.add(token);
@@ -423,15 +378,11 @@ public class DsaCalculator {
                 stack.push((String) token);
             }
         }
-
         while (!stack.isEmpty()) {
             String op = stack.pop();
             if (op.equals("(") || op.equals(")")) throw new Exception("Mismatched parentheses");
             postfix.add(op);
         }
-
         return postfix;
     }
-
-
 }
